@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/romiaujla/google-play-app-server/issues"
   },
-  "homepage": "https://github.com/romiaujla/google-play-app-server#readme"
+  "homepage": "https://github.com/romiaujla/google-play-app-server#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
