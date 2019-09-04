@@ -8,55 +8,71 @@ app.use(morgan('dev'));
 app.use(cors());
 
 const PORT = 8000;
+const GENRES = ['action', 'puzzle', 'strategy', 'casual', 'arcade', 'card'];
+const SORT = ['rating', 'app'];
 
 app.listen(PORT, () => {
     console.log(`Express Server is running at port ${PORT}`);
 })
 
-app.get('/', (_, res) => { 
+app.get('/', (_, res) => {
     res.send(`Express Server is running at port ${PORT}`);
 })
 
-app.get('/apps', (req, res)=> {
-    let {genres = '', sort = ''} = req.query;
+app.get('/apps', validateQuery, (req, res) => {
+    let { genres = '', sort = '' } = req.query;
     let result = [];
     
-
-    // Parameter Validation
-    if(genres){
-        genres = genres.toLowerCase();
-        if(!['action', 'puzzle', 'strategy', 'casual', 'arcade', 'card'].includes(genres)){
-            return res
-                .status(404)
-                .send(`Genres must be one of 'action', 'puzzle', 'strategy', 'casual', 'arcade', 'card'.`);
-        }
-    }
-
-    if(sort){
-        sort = sort.toLowerCase();
-        if(!['rating','app'].includes(sort)){
-            return res
-                .status(404)
-                .send(`Sort must be one of rating or app`);
-        }else if(sort === 'rating'){
-            sort = 'Rating';
-        }else{
-            sort = 'App';
-        }
-    }
-
+    // Filtering genres
     result = playstore.filter((app) => app
-                                        .Genres
-                                        .toLowerCase()
-                                        .includes(genres));
+        .Genres
+        .toLowerCase()
+        .includes(genres));
 
-    if(sort){
+    // Sorting
+    if (sort) {
+        sort = sort === 'rating' ? 'Rating' : 'App';
         result
-            .sort((a,b) => {
+            .sort((a, b) => {
                 return a[sort] > b[sort] ? 1 : a[sort] < b[sort] ? -1 : 0;
             })
     }
 
     res.json(result);
+});
 
+function validateQuery(req, res, next){
+    let { genres = '', sort = '' } = req.query;
+    let err;
+    let message; 
+    
+    // Parameter Validation
+    if (genres) {
+        genres = genres.toLowerCase();
+        if (!GENRES.includes(genres)) {
+            message = `Genres must be one of ${GENRES.join(', ')}`;
+        }
+    }
+
+    if (sort) {
+        sort = sort.toLowerCase();
+        if (!SORT.includes(sort)) {
+            message = `SORT must be one of ${SORT.join(', ')}`;
+        } 
+    }
+
+    if(message){
+        err = new Error(message)
+        err.status = 400;
+        return next(err);
+    }
+
+    next();
+}
+
+
+app.use((error, req, res, next) => {
+    res
+        .status(error.status)
+        .send(error.message);
 })
