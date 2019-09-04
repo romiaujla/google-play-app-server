@@ -4,8 +4,8 @@
   "description": "Practising Node js Servers",
   "main": "index.js",
   "scripts": {
-    "start" : "node app",
-    "dev" : "nodemon app",
+    "start": "node server",
+    "dev": "nodemon server",
     "test": "mocha test"
   },
   "repository": {
@@ -25,6 +25,9 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
+    "nodemon": "^1.19.1",
+    "supertest": "^4.0.2"
   }
 }
