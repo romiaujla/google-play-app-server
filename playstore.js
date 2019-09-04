@@ -299,4 +299,8 @@ module.exports = [
       "Current Ver": "2.9",
       "Android Ver": "2.3.3 and up"
     }
+<<<<<<< HEAD
   ];
+=======
+  ];
+>>>>>>> bcc552f835ffd26f754c783e699f1ac211109d1a

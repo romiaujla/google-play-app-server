@@ -4,9 +4,15 @@
   "description": "Practising Node js Servers",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "start" : "node app",
     "dev" : "nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1"
+=======
+    "start": "node server",
+    "dev": "nodemon server",
+    "test": "mocha app"
+>>>>>>> bcc552f835ffd26f754c783e699f1ac211109d1a
   },
   "repository": {
     "type": "git",
