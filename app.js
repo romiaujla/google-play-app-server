@@ -7,13 +7,8 @@ const app = express();
 app.use(morgan('dev'));
 app.use(cors());
 
-const PORT = 8000;
 const GENRES = ['action', 'puzzle', 'strategy', 'casual', 'arcade', 'card'];
 const SORT = ['rating', 'app'];
-
-app.listen(PORT, () => {
-    console.log(`Express Server is running at port ${PORT}`);
-})
 
 app.get('/', (_, res) => {
     res.send(`Express Server is running at port ${PORT}`);
@@ -76,3 +71,5 @@ app.use((error, req, res, next) => {
         .status(error.status)
         .send(error.message);
 })
+
+module.exports = app;
