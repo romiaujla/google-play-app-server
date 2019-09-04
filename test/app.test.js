@@ -114,7 +114,6 @@ describe(`GET /apps`, () => {
                 
                 // capitalize the sort parameter for correct sorting
                 sort = SORT[expectedSort][0].toUpperCase() + SORT[expectedSort].substr(1);
-
                 const genreArray = res.body.map((app) => app.Genres);
                 const sortingArray = res.body.map((app) => app[sort]);
                 matchGenres(genreArray, expectedGenre);

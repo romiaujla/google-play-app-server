@@ -26,7 +26,9 @@ app.get('/apps', validateQuery, (req, res) => {
 
     // Sorting
     if (sort) {
-        sort = sort === 'rating' ? 'Rating' : 'App';
+        // capitalize sort , e.g. is it is rating change it to Rating
+        sort = sort[0].toUpperCase() + sort.substr(1);
+        console.log(sort);
         result
             .sort((a, b) => {
                 return a[sort] > b[sort] ? 1 : a[sort] < b[sort] ? -1 : 0;
@@ -36,7 +38,8 @@ app.get('/apps', validateQuery, (req, res) => {
     res.json(result);
 });
 
-function validateQuery(req, res, next){
+// Validation Moduule, to check for  query errors
+function validateQuery(req, _, next){
     let { genres = '', sort = '' } = req.query;
     let err;
     let message; 
@@ -67,8 +70,8 @@ function validateQuery(req, res, next){
     return next();
 }
 
-
-app.use((error, req, res, next) => {
+// Error handler, returns the errors required, avoids redundant code
+app.use((error, _, res, __) => {
     res
         .status(error.status)
         .send(error.message);
