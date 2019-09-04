@@ -50,4 +50,10 @@ describe(`GET /apps`, () => {
             .expect(400, `SORT must be one of ${SORT.join(', ')}`);
     });
 
+    it(`Return status 400 if genre parameter is incorrect`, () => {
+        return request(app)
+            .get('/apps')
+            .query({genres: 'incorrect'})
+            .expect(400, `Genres must be one of ${GENRES.join(', ')}`);
+    })
 })
