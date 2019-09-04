@@ -41,7 +41,7 @@ function validateQuery(req, res, next){
     let err;
     let message; 
     
-    // Parameter Validation
+    // Genres Validation
     if (genres) {
         genres = genres.toLowerCase();
         if (!GENRES.includes(genres)) {
@@ -49,6 +49,7 @@ function validateQuery(req, res, next){
         }
     }
 
+    // Sort Validation
     if (sort) {
         sort = sort.toLowerCase();
         if (!SORT.includes(sort)) {
@@ -56,13 +57,14 @@ function validateQuery(req, res, next){
         } 
     }
 
+    // Return error if validation fails
     if(message){
         err = new Error(message)
         err.status = 400;
         return next(err);
     }
 
-    next();
+    return next();
 }
 
 
